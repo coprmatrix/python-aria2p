@@ -1,0 +1,28 @@
+<services>
+  <service name="obs_scm">
+    <param name="filename">aria2p</param>
+    <param name="scm">git</param>
+    <param name="url">https://github.com/pawamoy/aria2p.git</param>
+    <param name="revision">main</param>
+    <param name="without-version">enable</param>
+    <param name="versionformat">@PARENT_TAG@</param>
+  </service>
+    <service mode="buildtime" name="py_build">
+        <param name="noop">enable</param>
+    </service>
+    <service mode="buildtime" name="run">
+        <param name="command">source main.sh</param>        
+    </service>
+    <service name="extract_file" mode="buildtime">
+        <param name="archive">aria2p-*.tar.gz</param>
+        <param name="file">aria2p-*/PKG-INFO</param>
+    </service>
+    <service name="py2pack_generate" mode="buildtime">
+        <param name="name">aria2p</param>
+        <param name="localfile">PKG-INFO</param>
+    </service>
+    <service name="perl_regex" mode="buildtime">
+        <param name="file">*.spec</param>
+        <param name="regex">s/.*CHOOSE:.*//g</param>
+    </service>
+</services>
